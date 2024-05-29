@@ -1,0 +1,412 @@
+{
+	"info": {
+		"_postman_id": "453c3de9-6ee8-4233-b7f1-fdc9ab5da120",
+		"name": "py01_docker_rest_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "34392557"
+	},
+	"item": [
+		{
+			"name": "index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002"
+			},
+			"response": []
+		},
+		{
+			"name": "auth_login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Esteban\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "auth_register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Juanito\",\r\n    \"password\": \"3000\",\r\n    \"idTipo\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/auth/register"
+			},
+			"response": []
+		},
+		{
+			"name": "auth_logout",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM1NzI1MjcsImV4cCI6MTcxMzU3MzEyNywidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.NmjLuxHsp8Y1ejoZNXkKeVVnJl5Ay1r_84h8OIq0pBw\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/auth/logout"
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM1ODY3MzMsImV4cCI6MTcxMzU4NzMzMywidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.XI924-C0QnqBezRY1qdG0YxMzrjAveM3FsMajsGD8X8\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/users"
+			},
+			"response": []
+		},
+		{
+			"name": "user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/users/1"
+			},
+			"response": []
+		},
+		{
+			"name": "user_put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Manuel 2\",\r\n    \"password\": \"1112\",\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM1ODY3MzMsImV4cCI6MTcxMzU4NzMzMywidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.XI924-C0QnqBezRY1qdG0YxMzrjAveM3FsMajsGD8X8\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/users/2"
+			},
+			"response": []
+		},
+		{
+			"name": "user_delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM1NzE1MzUsImV4cCI6MTcxMzU3MjEzNSwidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.ypjtiRlCvf7ne26RpdxQtvmQIusLW9WDVz1h0wZaAe4\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/users/2"
+			},
+			"response": []
+		},
+		{
+			"name": "surveys_post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Prueba 1000\",\r\n  \"description\": \"Prueba\",\r\n  \"idUser\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/surveys"
+			},
+			"response": []
+		},
+		{
+			"name": "surveys",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/surveys"
+			},
+			"response": []
+		},
+		{
+			"name": "survey",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/surveys/6625cfed9a5329137fa6a2f1"
+			},
+			"response": []
+		},
+		{
+			"name": "surveys_put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Prueba 1000\",\r\n  \"description\": \"Prueba\",\r\n  \"idUser\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/surveys/6625866c83738db56a762a05"
+			},
+			"response": []
+		},
+		{
+			"name": "surveys_delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:5002/surveys/6625866c83738db56a762a05"
+			},
+			"response": []
+		},
+		{
+			"name": "surveys_publish",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:5002/surveys/6625866c83738db56a762a05/publish"
+			},
+			"response": []
+		},
+		{
+			"name": "questions_post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Pregunta abierta\",\r\n    \"description\": \"¿Qué opinas sobre el cambio climático?\",\r\n    \"type\": \"open\",\r\n    \"options\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/surveys/6625866c83738db56a762a05/questions"
+			},
+			"response": []
+		},
+		{
+			"name": "questions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/surveys/6625866c83738db56a762a05/questions"
+			},
+			"response": []
+		},
+		{
+			"name": "questions_put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Pregunta abierta\",\r\n    \"description\": \"¿Qué opinas sobre que todos los caminos lleven a Roma?\",\r\n    \"type\": \"open\",\r\n    \"options\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/surveys/6625866c83738db56a762a05/questions/6625d70f9a5329137fa6a338"
+			},
+			"response": []
+		},
+		{
+			"name": "questions_delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "http://localhost:5002/surveys/6625866c83738db56a762a05/questions/6625d70f9a5329137fa6a338"
+			},
+			"response": []
+		},
+		{
+			"name": "responses_post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"1\": \r\n  {\r\n    \"Id_pregunta\":\"1212\",\r\n    \"Respuesta\":\"Yo considero...\"\r\n  },\r\n  \"2\": \r\n  {\r\n    \"Id_pregunta\":\"1212\",\r\n    \"Respuesta\":\"2\"\r\n  },\r\n  \"3\":\r\n  {\r\n    \"Id_pregunta\":\"1212\",\r\n    \"Respuesta\":\"2\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/surveys/66259572e6dc90ed17ec5ed8/responses"
+			},
+			"response": []
+		},
+		{
+			"name": "responses_get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/surveys/66259572e6dc90ed17ec5ed8/responses"
+			},
+			"response": []
+		},
+		{
+			"name": "respondents_post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Pedro p\",\r\n    \"correo\": \"Correo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/respondents/66259547e6dc90ed17ec5ed6"
+			},
+			"response": []
+		},
+		{
+			"name": "respondents",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM3MzkwNzIsImV4cCI6MTcxMzczOTY3MiwidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.YXiGqZfj2pGOQZAsQRv7vl2xUOqq-5cHHwIwfP78qyo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/respondents/all/66259547e6dc90ed17ec5ed6"
+			},
+			"response": []
+		},
+		{
+			"name": "respondent",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM3MzY1MTIsImV4cCI6MTcxMzczNzExMiwidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.TJhr2PLLjq8VyBokXI9wDtecLOwp9sShhc-J3gaAw5g\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/respondents/6625866c83738db56a762a05"
+			},
+			"response": []
+		},
+		{
+			"name": "respondents_put",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Pedro r\",\r\n    \"correo\": \"Correo\",\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM3MzI4NDgsImV4cCI6MTcxMzczMzQ0OCwidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.iK9qLWzAWqPRyyUXWb_yP5V8Q24v-Nzif9szENAFEDI\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/respondents/662577eebc8a7bc177fa6284"
+			},
+			"response": []
+		},
+		{
+			"name": "respondents_delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM3MzI4NDgsImV4cCI6MTcxMzczMzQ0OCwidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.iK9qLWzAWqPRyyUXWb_yP5V8Q24v-Nzif9szENAFEDI\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/respondents/662577eebc8a7bc177fa6284"
+			},
+			"response": []
+		},
+		{
+			"name": "analysis",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTM3MzkwNzIsImV4cCI6MTcxMzczOTY3MiwidXNlcm5hbWUiOiJFc3RlYmFuIiwiaWRUaXBvIjoxLCJpZCI6MX0.YXiGqZfj2pGOQZAsQRv7vl2xUOqq-5cHHwIwfP78qyo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/surveys/analysis/66259547e6dc90ed17ec5ed6"
+			},
+			"response": []
+		}
+	]
+}

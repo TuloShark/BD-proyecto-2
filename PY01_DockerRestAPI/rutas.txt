@@ -1,0 +1,150 @@
+###### Importaciones 
+from flask import Flask, request
+from app_service import Appservice
+
+### Datos de entorno
+
+### Base de datos
+
+### Aplicacion
+app = Flask(__name__)
+
+### Servicios
+
+###### Lista de endpoints
+### App
+@app.route("/", methods=["GET"])
+def home():
+    return "New Page!"
+
+### Autenticacion y autorizacion
+# Registrar usuario
+@app.route("/auth/register", methods=["POST"])
+def authRegister():
+    return "authRegister"
+
+# Autenticar usuaro
+@app.route("/auth/login", methods=["POST"])
+def authLogin():
+    return "authLogin"
+
+# Cerrar sesion
+@app.route("/auth/logout", methods=["GET"])
+def authLogout():
+    return "authLogout"
+
+### Usuarios
+# Listar usuarios
+@app.route("/users", methods=["GET"])
+def usersGet():
+    return "usersGet"
+
+# Detalles de usuario
+@app.route("/users/<int:id>", methods=["GET"])
+def userGet():
+    return "userGet"
+
+# Actualizar informacion usuario
+@app.route("/users/<int:id>", methods=["PUT"])
+def userPut():
+    return "userUpdate"
+
+# Eliminar usuario
+@app.route("/users/<int:id>", methods=["DELETE"])
+def userDelete():
+    return "userDelete"
+
+### Encuestas 
+# Crea una nueva encuesta
+@app.route("/surveys", methods=["POST"])
+def surveyPost():
+    return "surveyPost"
+
+# Lista todas las encuestas
+@app.route("/surveys", methods=["GET"])
+def surveysGet():
+    return "surveysGet"
+
+# Muestra los detalles de encuesta
+@app.route("/surveys/<int:id>", methods=["GET"])
+def surveyGet():
+    return "surveyGet"
+
+# Actualiza una encuesta 
+@app.route("/surveys/<int:id>", methods=["PUT"])
+def surveyPut():
+    return "surveyPut"
+
+# Elimina una encuesta
+@app.route("/surveys/<int:id>", methods=["DELETE"])
+def surveyDelete():
+    return "surveyDelete"
+
+# Publica una encuesta
+@app.route("/surveys/<int:id>/publish", methods=["POST"])
+def surveyPublish():
+    return "surveyPublish"
+
+### Preguntas de encuestas
+# Agregar pregunta
+@app.route("/surveys/<int:id>/questions", methods=["POST"])
+def surveyPostQuestion():
+    return "surveyPostQuestion"
+
+# Lista las preguntas
+@app.route("/surveys/<int:id>/questions", methods=["GET"])
+def surveyGetQuestions():
+    return "surveyGetQuestions"
+
+# Actualiza una pregunta
+@app.route("/surveys/<int:id>/questions/<int:idQuestion>", methods=["PUT"])
+def surveyPutQuestion():
+    return "surveyPutQuestion"
+
+# Elimina una pregunta
+@app.route("/surveys/<int:id>/questions/<int:idQuestion>", methods=["DELETE"])
+def surveyDeleteQuestion():
+    return "surveyDeleteQuestion"
+
+### Respuestas de encuentas
+# Enviar respuestas
+@app.route("/surveys/<int:id>/responses", methods=["POST"])
+def surveyPostResponses():
+    return "surveyPostResponses"
+
+# Listar respuestas 
+@app.route("/surveys/<int:id>/responses", methods=["GET"])
+def surveyGetResponses():
+    return "surveyGetResponses"
+
+### Encuestados
+# Registrar encuestado
+@app.route("/respondents", methods=["POST"])
+def respondentPost():
+    return "respondentPost"
+
+# Listar encuestados
+@app.route("/respondents", methods=["GET"])
+def respondentsGet():
+    return "respondentsGet"
+
+# Detalle encuestado
+@app.route("/respondents/<int:id>", methods=["GET"])
+def respondentGet():
+    return "respondentGet"
+
+# Actualizar encuestado
+@app.route("/respondents/<int:id>", methods=["PUT"])
+def respondentPut():
+    return "respondentPut"
+
+# Elimina encuestado
+@app.route("/respondents/<int:id>", methods=["DELETE"])
+def respondentDelete():
+    return "respondentDelete"
+
+### Reportes
+# Generar analisis de respuestas
+@app.route("/surveys/<int:id>/analysis", methods=["GET"])
+def surveyAnalysis():
+    return "surveyAnalysis"
