@@ -1,4 +1,5 @@
 ### Importaciones
+from flask import Flask
 from config import config
 from src import init_app
 
@@ -6,7 +7,9 @@ from src import init_app
 configuration = config['development']
 
 ### Aplicacion
-app = init_app(configuration)
+app = Flask(__name__)
+app.config.from_object(configuration)
+app.register_blueprint(survey_bp, url_prefix='/api')
 
 ### Iniciar la aplicacion
 if __name__ == '__main__':
