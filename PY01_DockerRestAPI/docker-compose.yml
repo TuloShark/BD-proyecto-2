@@ -56,8 +56,12 @@ services:
       - kafka-broker-1
       - python_database
       - mongo
+      - spark-master
+      - spark-worker
+      - neo4j
     networks:
       - web
+    command: spark-submit /app/spark_jobs/process_responses.py
 
   python_database:
     container_name: python_database
@@ -99,7 +103,41 @@ services:
     depends_on:
       - kafka-broker-1
       - zookeeper
- 
+
+  spark-master:
+    image: bitnami/spark:latest
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    networks:
+      - web
+
+  spark-worker:
+    image: bitnami/spark:latest
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    depends_on:
+      - spark-master
+    networks:
+      - web
+
+  neo4j:
+    image: neo4j:latest
+    environment:
+      - NEO4J_AUTH=neo4j/test
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    networks:
+      - web
+
 networks:
   web:
     driver: bridge
