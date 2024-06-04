@@ -1,10 +1,40 @@
 version: '3'
 
 services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - web
+
+  kafka-broker-1:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka-broker-1
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-1:9092,PLAINTEXT_INTERNAL://kafka-broker-1:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+    networks:
+      - web
+
   py01_docker_rest_api:
     container_name: py01_docker_rest_api
     build: .
     environment:
+      KAFKA_BROKER_URL: kafka-broker-1:9092
       SECRET_KEY: B!1w8*NAt1T^%kvhUI*s^
       JWT_KEY: D5*F?_1?-d$f*1
       DATABASE_HOST: python_database
@@ -23,6 +53,7 @@ services:
     ports:
       - "5002:5000"
     depends_on:
+      - kafka-broker-1
       - python_database
       - mongo
     networks:
@@ -60,6 +91,14 @@ services:
       - "6379:6379"
     networks:
       - web
+  
+  kafka_consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    depends_on:
+      - kafka-broker-1
+      - zookeeper
  
 networks:
   web:

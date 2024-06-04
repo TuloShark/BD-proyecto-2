@@ -4,9 +4,59 @@ from src.services.RespondentsServices import RespondentService
 import traceback
 from src.utils.Logger import Logger
 from src.utils.Security import Security
+from kafka_producer import KafkaProducerSingleton
 #from utils.Security import token_required
 
 main = Blueprint('surveys_blueprint', __name__)
+survey_routes = Blueprint('survey_routes', __name__)
+
+kafka_producer = KafkaProducerSingleton.get_instance()
+
+@main.route('/surveys/<string:survey_id>/edit/start', methods=['POST'])
+def start_edit_session(survey_id):
+    try:
+        message = {
+            'survey_id': survey_id,
+            'action': 'start_edit',
+            'user': request.json.get('user'),
+            'timestamp': request.json.get('timestamp')
+        }
+        kafka_producer.send_message('survey_edit_topic', message)
+        return jsonify({'message': 'Edit session started', 'success': True})
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'message': 'Error starting edit session', 'success': False, 'error': str(e)})
+
+@main.route('/surveys/<string:survey_id>/edit/submit', methods=['POST'])
+def submit_edit(survey_id):
+    try:
+        changes = request.json.get('changes')
+        message = {
+            'survey_id': survey_id,
+            'action': 'submit_edit',
+            'user': request.json.get('user'),
+            'changes': changes,
+            'timestamp': request.json.get('timestamp')
+        }
+        kafka_producer.send_message('survey_edit_topic', message)
+        return jsonify({'message': 'Changes submitted', 'success': True})
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'message': 'Error submitting changes', 'success': False, 'error': str(e)})
+
+@main.route('/surveys/<string:survey_id>/edit/status', methods=['GET'])
+def edit_status(survey_id):
+    try:
+        # This is a placeholder. Implement the logic to retrieve the status of the survey edit session.
+        status = {
+            'survey_id': survey_id,
+            'status': 'editing',
+            'users': ['user1', 'user2']
+        }
+        return jsonify({'message': 'Edit status retrieved', 'success': True, 'status': status})
+    except Exception as e:
+        traceback.print_exc()
+        return jsonify({'message': 'Error retrieving edit status', 'success': False, 'error': str(e)})
 
 # Crea una nueva encuesta
 @main.route("/surveys", methods=["POST"])
