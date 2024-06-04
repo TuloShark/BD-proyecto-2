@@ -4,12 +4,13 @@ from src.services.RespondentsServices import RespondentService
 import traceback
 from src.utils.Logger import Logger
 from src.utils.Security import Security
-from src.utils.kafka_producer import send_message  # Importa el productor de Kafka
+#from utils.Security import token_required
 
 main = Blueprint('surveys_blueprint', __name__)
 
 # Crea una nueva encuesta
 @main.route("/surveys", methods=["POST"])
+#@token_required
 def surveyPost():
     survey_data = request.get_json()
     result, survey_id = SurveyService.create_survey(survey_data)
@@ -19,6 +20,7 @@ def surveyPost():
         return jsonify({"success": False, "error": "Error creating survey"}), 400
 
 @main.route('/surveys/<string:survey_id>/responses', methods=['GET'])
+#@token_required
 def get_responses(survey_id):
     responses = SurveyService.get_responses_by_survey(survey_id)
     if responses is not None:
@@ -43,7 +45,8 @@ def surveyGet(survey_id):
 
 # Actualiza una encuesta 
 @main.route("/surveys/<string:survey_id>", methods=["PUT"])
-def surveyPut(survey_id):
+#@token_required
+def surveyPut( survey_id):
     update_data = request.get_json()
     result = SurveyService.update_survey(survey_id, update_data)
     if result:
@@ -53,7 +56,8 @@ def surveyPut(survey_id):
 
 # Elimina una encuesta
 @main.route("/surveys/<string:survey_id>", methods=["DELETE"])
-def surveyDelete(survey_id):
+#@token_required
+def surveyDelete( survey_id):
     result = SurveyService.delete_survey(survey_id)
     if result:
         return jsonify({"success": True, "deleted": True}), 200
@@ -62,6 +66,7 @@ def surveyDelete(survey_id):
 
 # Publica una encuesta
 @main.route("/surveys/<string:survey_id>/publish", methods=["POST"])
+#@token_required
 def surveyPublish(survey_id):
     result = SurveyService.publish_survey(survey_id)
     if result:
@@ -74,11 +79,31 @@ def responsesPost(responses_id):
     try:
         responses_data = request.get_json()
         data = SurveyService.post_responses_user(responses_data, responses_id)
+        print(data)
         return jsonify({'success': True, 'Data':data})
     except Exception as e:
         Logger.add_to_log("error", str(e))
         Logger.add_to_log("error", traceback.format_exc())
-
+#####responsesPost########
+"""{
+  "1": 
+  {
+    "Id_pregunta":"1212",
+    "Respuesta":"Yo considero..."
+  },
+  "2": 
+  {
+    "Id_pregunta":"1212",
+    "Respuesta":"2"
+  },
+  "3":
+  {
+    "Id_pregunta":"1212",
+    "Respuesta":"2"
+  }
+}"""
+#############
+    
 @main.route("/surveys/analysis/<string:survey_id>", methods=["GET"])
 def analysisGet(survey_id):
     token = request.get_json()
@@ -90,21 +115,5 @@ def analysisGet(survey_id):
         return jsonify({"success": True, "Analysis": analysis}), 200
     else:
         return jsonify({"success": False, "error": "Question not found"}), 404
-
-# Nuevas rutas para la edición colaborativa
-@main.route('/surveys/<string:id>/edit/start', methods=['POST'])
-def start_edit_session(id):
-    message = {'survey_id': id, 'action': 'start_edit'}
-    send_message('edit_topic', message)
-    return jsonify({'status': 'edit session started'}), 200
-
-@main.route('/surveys/<string:id>/edit/submit', methods=['POST'])
-def submit_edit(id):
-    changes = request.json
-    message = {'survey_id': id, 'action': 'submit_edit', 'changes': changes}
-    send_message('edit_topic', message)
-    return jsonify({'status': 'changes submitted'}), 200
-
-@main.route('/surveys/<string:id>/edit/status', methods=['GET'])
-def edit_status(id):
-    return jsonify({'status': 'edit in progress'}), 200
+    
+    
