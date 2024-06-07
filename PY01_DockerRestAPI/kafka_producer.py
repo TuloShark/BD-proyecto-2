@@ -1,5 +1,7 @@
 from kafka import KafkaProducer
 import json
+import traceback
+from src.database.db_mongodb import get_mongo_connection
 
 class KafkaProducerSingleton:
     _instance = None
@@ -22,5 +24,14 @@ class KafkaProducerSingleton:
             KafkaProducerSingleton._instance = self
 
     def send_message(self, topic, message):
-        self.producer.send(topic, value=message)
-        self.producer.flush()
+        try:
+            db = get_mongo_connection()
+            if db is not None:
+                collection = db.chat_messages if topic == 'chat_messages' else db.survey_edit_messages
+                result = collection.insert_one(message)
+                message['_id'] = str(result.inserted_id)
+            self.producer.send(topic, value=message)
+            self.producer.flush()
+        except Exception as e:
+            print(f"Failed to send message: {e}")
+            traceback.print_exc()

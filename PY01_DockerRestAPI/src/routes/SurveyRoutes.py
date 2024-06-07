@@ -5,7 +5,7 @@ import traceback
 from src.utils.Logger import Logger
 from src.utils.Security import Security
 from kafka_producer import KafkaProducerSingleton
-#from utils.Security import token_required
+import datetime
 
 main = Blueprint('surveys_blueprint', __name__)
 survey_routes = Blueprint('survey_routes', __name__)
@@ -19,7 +19,7 @@ def start_edit_session(survey_id):
             'survey_id': survey_id,
             'action': 'start_edit',
             'user': request.json.get('user'),
-            'timestamp': request.json.get('timestamp')
+            'timestamp': datetime.datetime.utcnow().isoformat()
         }
         kafka_producer.send_message('survey_edit_topic', message)
         return jsonify({'message': 'Edit session started', 'success': True})
@@ -36,7 +36,7 @@ def submit_edit(survey_id):
             'action': 'submit_edit',
             'user': request.json.get('user'),
             'changes': changes,
-            'timestamp': request.json.get('timestamp')
+            'timestamp': datetime.datetime.utcnow().isoformat()
         }
         kafka_producer.send_message('survey_edit_topic', message)
         return jsonify({'message': 'Changes submitted', 'success': True})
@@ -134,25 +134,6 @@ def responsesPost(responses_id):
     except Exception as e:
         Logger.add_to_log("error", str(e))
         Logger.add_to_log("error", traceback.format_exc())
-#####responsesPost########
-"""{
-  "1": 
-  {
-    "Id_pregunta":"1212",
-    "Respuesta":"Yo considero..."
-  },
-  "2": 
-  {
-    "Id_pregunta":"1212",
-    "Respuesta":"2"
-  },
-  "3":
-  {
-    "Id_pregunta":"1212",
-    "Respuesta":"2"
-  }
-}"""
-#############
     
 @main.route("/surveys/analysis/<string:survey_id>", methods=["GET"])
 def analysisGet(survey_id):

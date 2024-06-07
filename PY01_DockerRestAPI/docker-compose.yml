@@ -91,11 +91,11 @@ services:
       - "6379:6379"
     networks:
       - web
-  
+
   kafka_consumer:
     build:
       context: .
-      dockerfile: Dockerfile.consumer
+      dockerfile: Dockerfile
     depends_on:
       - kafka-broker-1
       - zookeeper

@@ -1,6 +1,6 @@
 ### Importaciones
 from flask import Flask
-from .routes import AuthRoutes, IndexRoutes, UserRoutes, SurveyRoutes, RespondentRoutes, QuestionsRoutes
+from .routes import AuthRoutes, IndexRoutes, UserRoutes, SurveyRoutes, RespondentRoutes, QuestionsRoutes, ChatRoutes
 ### Aplicacion
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def init_app(config):
     app.register_blueprint(SurveyRoutes.survey_routes, url_prefix='/surveys')
     app.register_blueprint(QuestionsRoutes.main)
     app.register_blueprint(RespondentRoutes.main, url_prefix='/respondents')
+    app.register_blueprint(ChatRoutes.chat_routes, url_prefix='/chat')
 
     # Devuelve la aplicacion
     return app
-

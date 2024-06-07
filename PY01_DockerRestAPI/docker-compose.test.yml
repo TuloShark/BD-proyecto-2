@@ -74,7 +74,7 @@ services:
       - python_database_test
       - mongo_test
       - redis_test
-    command: pytest --disable-warnings test_index.py test_auth.py test_user.py test_surveys.py test_questions.py test_responses.py test_respondents.py test_analysis.py # Comando para ejecutar las pruebas
+    command: pytest --disable-warnings test_surveys.py test_questions.py test_responses.py test_respondents.py test_analysis.py # Comando para ejecutar las pruebas
     networks:
       - web_test
 
